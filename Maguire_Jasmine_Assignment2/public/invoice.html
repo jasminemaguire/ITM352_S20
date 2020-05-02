@@ -1,3 +1,5 @@
+<!-- Jasmine Maguire-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +17,9 @@
     var quantities = [];
     // invoice is processed after form is submitted
     // From invoice1_1
+    if (params.has('username')) {
+        alert(`Thank you for shopping with us ${params.get('username')}!`)
+    }
     if (params.has('purchase_submit')) {
         for (i = 0; i < products.length; i++) {
             if (params.has(`quantity${i}`)) {
@@ -22,11 +27,14 @@
                 quantities[i] = a_qty;
             }
         }
-    } else {
+    }
+    else {
         document.write('no form submitted');
     }
     console.log(quantities);
+
 </script>
+
 <html>
 <body>
     <center>
@@ -101,7 +109,7 @@
                 </tr>
                 <tr>
                     <td colspan="4" width="35%">
-                        <center><b>OUR SHIPPING POLICY IS: 
+                        <center><b>OUR SHIPPING POLICY IS:
                                 <br>Orders under $50 will be charged $10 for shipping,
                                 <br>Orders between $50-100 will be charged $5 for shipping,
                                 <br><i>FREE SHIPPING FOR ORDERS OVER $100</i></b>
@@ -110,7 +118,5 @@
     </tr>
     </tbody>
     </table>
-
 </body>
-
 </html>

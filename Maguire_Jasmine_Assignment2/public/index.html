@@ -22,14 +22,16 @@
         return return_errors ? errors : (errors.length == 0);
     }
 
-    // From Assignment 1 Example
+    // From Port Assignment 1 Example
     function checkQuantityTextbox(theTextbox) {
         let errs = isNonNegInt(theTextbox.value, true);
-        if (errs.length > 0)
+        if (errs.length > 0) {
             document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
-        else
+        } else {
             document.getElementById(theTextbox.name + '_label').innerHTML = "";
+        }
     }
+
     // From Lab 11
     window.onload = function () {
         let params = (new URL(document.location)).searchParams; // Get query string
@@ -64,7 +66,7 @@
 </script>
 
 <body>
-    <form name="product_selection_form" action="" method="GET">
+    <form name="product_selection_form" action="/purchase" method="GET">
         <header>
             <h1>Jasmine's Bonsai Shop</h1>
             <ul>
