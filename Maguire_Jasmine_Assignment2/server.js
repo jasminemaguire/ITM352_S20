@@ -8,213 +8,172 @@ var express = require('express'); //create 'express' variable to use express
 var app = express(); //create 'app' of express module
 var myParser = require("body-parser"); // get parser from node.js
 var fs = require('fs'); // require file system from node
-var products = require("./public/product_data.js"); //include data from products_data.js
+var products = require("./public/products_data.js"); //include data from products_data.js
 var filename = 'userdata.json' //defines array as object
-var qs = require('querystring');
-var qstr = {};
-var quantity = {};
+var qs = require('querystring'); //need querystring in order to initiate functions
+var quantity = {}; //variable that requests the query string of product quantity
 
 app.use(myParser.urlencoded({ extended: true }));
 
-//go to invoice if quantity values accepted, if not, redirect back to order page 
-app.get("/process_page", function (request, response) {
-    //check for valid quantities
-    //look up request.query
-    quantity = request.query;
+//From Lab 11
+//Function to test if a string is a non-negative integer
+function isNonNegInt(q, returnErrors = false) {
+    errors = []; // assume no errors at first
+    if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+    if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+    if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+    return returnErrors ? errors : (errors.length == 0);
+}
+
+
+//From Lab13 
+app.all('*', function (request, response, next) { //Sends type of request and the path of request in response
+    console.log(request.method + ' to ' + request.path);
+    next();
+});
+
+
+//From Assignment 1 Example
+//Send to invoice if no errors, otherwise send back to products page
+app.get("/purchase", function (request, response) {
+    purchase_data = request.query; // save for later
+    //check if quantity data is valid
     params = request.query;
     console.log(params);
     if (typeof params['purchase_submit'] != 'undefined') {
-        has_errors = false; // assume no errors
-        total_qty = 0; // check total > 0
+        ExistErrors = false; // assume quantities are valid
+        total_qty = 0; // need to check if something was selected so we will look if the total > 0
         for (i = 0; i < products.length; i++) {
-            if (typeof params[`quantity${i}`] != 'undefined') {
-                a_qty = params[`quantity${i}`];
-                total_qty += a_qty;
+            if (typeof params[`quantity${i}`] != 'undefined') { //If all quantities are not undefined
+                a_qty = params[`quantity${i}`]; //variable a_qty stores quantities 
+                total_qty += a_qty; //Add the total quantity
                 if (!isNonNegInt(a_qty)) {
-                    has_errors = true;
+                    ExistErrors = true; // change to errors exist
                 }
             }
         }
+        console.log(ExistErrors, total_qty);
+        //request to look at query list/data
         qstr = querystring.stringify(request.query);
-
-        if (has_errors || total_qty == 0) {
-            //redirect to products page if quantity data is invalid
+        // Now respond to errors or redirect to login if all is ok
+        if (ExistErrors || total_qty == 0) {  //send back to products page if data is invalid
             qstr = querystring.stringify(request.query);
             response.redirect("index.html?" + qstr);
-        } else { //quantity data is ok for invoice
+        } else { //all good to go! send to invoice
             response.redirect("login.html?" + qstr);
         }
     }
 });
 
 
-//if quantity data valid, send to the invoice
-
-function isNonNegInt(q, returnErrors = false) {
-    errors = []; // assume that quantity data is valid 
-    if (q == "") { q = 0; }
-    if (Number(q) != q) errors.push('Not a number!'); //check if value is a number
-    if (q < 0) errors.push('Negative value!'); //check if value is a positive number
-    if (parseInt(q) != q) errors.push('Not an integer!'); //check if value is a whole number
-    return returnErrors ? errors : (errors.length == 0);
+if (fs.existsSync(filename)) { //Only open the file if it exists 
+    var stats = fs.statSync(filename);
+    console.log(filename);
+    var data = fs.readFileSync(filename, 'utf-8'); //read the file synchronously until the file comes back
+    var users_reg_data = JSON.parse(data); //Load users_reg_data from userdata.json
+    console.log(users_reg_data);
+}
+else {
+    console.log(filename + 'does not exist!'); //filename does not exist
 }
 
-//only open file if it exists
-if (fs.existsSync(filename)) {
-    stats = fs.statSync(filename) //gets stats from file
-
-    data = fs.readFileSync(filename, 'UTF-8');
-    console.log(typeof data);
-    users_reg_data = JSON.parse(data);
-}
-
-
-//go to login page
-app.get("/login.html", function (request, response) {
-    str = `
-    <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-    <link href="products_style.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Gotu" rel="stylesheet">
-</head>
-
-<body>
-    <div class="login-box">
-        <form name="basic_login" method="POST" action="/login">
-            <div class="textbox">
-                <input type="text" id="username_input" name="username" size="40" placeholder="username"><br />
-            </div>
-            <div class="textbox">
-                <input type="password" name="password" size="40" placeholder="password"><br />
-            </div>
-            <div class=submit_button>
-                <input type="submit" value="Login" id="submit_login">
-            </div>
-            <p class="message">Not a user? <a href='./registration.html'>Register</a></p>
-        </form>
-    </div>
-</body>
-
-</html>
-       
-`;
-    response.send(str);
-
-});
-
+//From Lab 13
+//Server-side processing
 app.post("/login.html", function (request, response) {
-    // Process login form POST and redirect to logged in page if ok, back to login page if not
-    console.log(quantity);
+    console.log(purchase_data);
     the_username = request.body.username;
+    the_username = request.body.username.toLowerCase(); //makes username case insensitive
     console.log(the_username, "Username is", typeof (users_reg_data[the_username]));
     //validate login data
-    if (typeof users_reg_data[the_username] != 'undefined') {
-        //To check if the username exists in the json data
+    if (typeof users_reg_data[the_username] != 'undefined') { //check if username actually exists
         if (users_reg_data[the_username].password == request.body.password) {
-            theQuantQuerystring = qs.stringify(quantity);
-            response.redirect('/cart_page.html?' + theQuantQuerystring + `&username=${the_username}`);
-
+            theQuantQuerystring = qs.stringify(purchase_data);  //turns quantity object into a string
+            response.redirect('invoice.html?' + theQuantQuerystring + `&username=${the_username}`); //all good, send to invoice with purchase data
         } else {
-            response.redirect('./login.html?')
-
+            error = "Invalid Password"; //Password does not exist/is wrong
         }
     }
-});
+    else {
+        error = "Invalid Username"; //Username does not exist
+    }
+    request.query.LoginError = error;
+    request.query.StickyLoginUser = the_username;
+    qstring = querystring.stringify(request.query);
+    response.redirect('/login.html?error=' + error);//if username doesn't exist then return to login page (with alert box)
+}
+);
 
-app.get("/registration.html", function (request, response) {
-    // Give a simple register form
 
-    str = `
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Customer Registration</title>
-        <link href = "products_style.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Gotu" rel="stylesheet">
-        <script>src ="server.js"</script>
-    </head>
-    <script>
-            var password = document.getElementById("password") //make password an object
-            var repeat_password = document.getElementById("repeat_password"); //make repeat password an object
-           
-            //make sure passwords are equal
-            function validatePassword(){
-              if(password.value != repeat_password.value) { //passwords dont match
-                alert("Passwords do not match");
-            response.redirect('public/registration.html') 
-              } 
-            else{ 
-                response.redirect('Login_Successful') //passwords match and login is successful
-            }
-          
-            }
-              validatePassword();
-          </script>
-    <body>
-        <ul>
-            <li><a href="index.html">Products</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="shipping.html">Shipping Policy</a></li>
-        </ul>
-    
-        <div style="margin-left:25%;padding:1.5px 16px;height:1000px;">
-            <div>
-                    <form  method="POST" action="" onsubmit=validatePassword() >
-                      <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="30" placeholder="Enter First & Last Name"><br />
-                      <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only" placeholder="Enter Username" ><br />
-                      <input type="email" name="email" size="40" placeholder="Enter Email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
-                      <input type="password" id="password" name="password"  size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Enter Password"><br />
-                      <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Repeat Password"><br />
-                   
-                      <input type="submit" value="Submit" id="submit">
-                  </form></div>
-               
-    </body>
-    </html>`;
-    response.send(str);
-});
+//From Lab 13
+//Server-side processing
+app.post("/registration.html", function (request, response) { //Process a simple registration form
+    console.log(purchase_data);
 
-app.post("/registration.html", function (request, response) {
-    // process a simple register form
-    console.log(quantity);
-    the_username = request.body.username;
-    console.log(the_username, "Username is", typeof (users_reg_data[the_username]));
+    //variable for re-enter password validation
+    var firstpassword = request.body.password;
+    var secondpassword = request.body.repeat_password;
 
-    username = request.body.username;//Save new user to file name (users_reg_data)
+    username = request.body.username;
+    username = request.body.username.toLowerCase(); //makes username case insensitive
+    errors = {};//checks to see if username already exists
 
-    errors = [];//Checks to see if username already exists
+    //username validation
+    if (typeof users_reg_data[username] != 'undefined') { //Check if username already exists
+        errors.username_error = "Username is Already in Use.";
+    }
+    if ((/[a-z0-9]+/).test(request.body.username) == false) {
+        errors.username_error = "Numbers and Letters only"; //Check if there are other symbols
+    }
+    if ((username.length > 15 == true)) {
+        errors.username_error = "Username is too long - 15 characters max"; //Check if too many characters
+    }
+    if ((username.length < 4) == true) {
+        errors.username_error = "Username is too short - 4 characters minimmum"; //Check if too few characters
+    }
 
-    if (typeof users_reg_data[username] != 'undefined') {
-        errors.push("Username is Already Taken");
+
+    fullname = request.body.fullname;//save new user
+    //fullname validation
+    if ((/[a-zA-Z]+[ ]+[a-zA-Z]+/).test(request.body.fullname) == false) {
+        errors.fullname_error = "Use letters only! Please leave a space between first and last name."; //Check if there are numbers or other symbols and make sure there is a space
+    }
+
+    if ((fullname.length > 35) == true) {
+        errors.fullname_error = "Please make your full name shorter - 35 characters max"; //Check if name is more than 35 characers
+    }
+
+    password = request.body.password;
+    //password validation
+    if ((password.length < 6) == true) {
+        errors.password_error = "Password is too short - 6 characters minimmum"; //Check if password is too short
+    }
+
+    email = request.body.email;
+    //email validation
+    if ((/[a-z0-9._]+@[a-z0-9]+\.[a-z]+/).test(request.body.email) == false) {
+        errors.email_error = "Please enter a valid email address"; //Check if email addess is valid
     }
 
     console.log(errors, users_reg_data);
-
-    if (errors.length == 0) {
+    //if there are 0 errors and repeat_password is equal to password, request all registration info
+    if ((Object.keys(errors).length == 0) & (firstpassword == secondpassword)) {
         users_reg_data[username] = {};
-        users_reg_data[username].username = request.body.username
-        users_reg_data[username].password = request.body.password;
-        users_reg_data[username].email = request.body.email;
+        users_reg_data[username].username = request.body.username //Input username into JSON file array
+        users_reg_data[username].password = request.body.password; //Input password in array
+        users_reg_data[username].email = request.body.email; //Input email in array
+        users_reg_data[username].fullname = request.body.fullname; //Input fullname in array
 
-        theQuantQuerystring = qs.stringify(quantity);
-        fs.writeFileSync(filename, JSON.stringify(users_reg_data));
-        response.redirect("/invoice.html?" + theQuantQuerystring + `&username=${the_username}`);
-
-
+        fs.writeFileSync(filename, JSON.stringify(users_reg_data)); //Write it out in the JSON file to store data
+        theQuantQuerystring = qs.stringify(purchase_data); //make string
+        response.redirect("/invoice.html?" + theQuantQuerystring + `&username=${username}`); //send to invoice if all good
+    } else {
+        qstring = qs.stringify(request.body) + "&" + qs.stringify(errors); //make errores query string
+        response.redirect('/registration.html?' + qstring); //redirect to registration page if there are errors
     }
 });
 
-
-app.all('*', function (request, response, next) {
-    console.log(request.method + ' to ' + request.path);
-    next();
-});
+//Lab 13
+//Server-side processing
+//Look for files in the "public" folder and listen on port 8080
 app.use(express.static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));

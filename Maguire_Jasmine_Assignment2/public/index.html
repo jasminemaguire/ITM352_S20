@@ -1,3 +1,6 @@
+<!-- Jasmine Maguire--> 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,19 +25,20 @@
         return return_errors ? errors : (errors.length == 0);
     }
 
-    // From Port Assignment 1 Example
+    // From Assignment 1 Example
     function checkQuantityTextbox(theTextbox) {
-        let errs = isNonNegInt(theTextbox.value, true);
-        if (errs.length > 0) {
-            document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
-        } else {
-            document.getElementById(theTextbox.name + '_label').innerHTML = "";
+        errs = isNonNegInt(theTextbox.value, true);
+        if (errs.length == 0) {
+            errs = ['Quantity:'];
+        if (theTextbox.value.trim() == '') {} 
+            errs = ['Quantity:'];
         }
+        document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", "); 
     }
 
     // From Lab 11
     window.onload = function () {
-        let params = (new URL(document.location)).searchParams; // Get query string
+        let params = (new URL(document.location)).searchParams; // Get query string which has the form data
         // First check that quantities are valid, then redirect to invoice.
         if (params.has('purchase_submit')) {
             has_errors = false;
@@ -46,8 +50,8 @@
                     product_selection_form[`quantity${i}`].value = a_qty;
                     total_qty += a_qty;
                     if (!isNonNegInt(a_qty)) {
-                        has_errors = true;
-                        checkQuantityTextbox(product_selection_form[`quantity${i}`]); // Display error
+                        has_errors = true; //oops, invalid quantity
+                        checkQuantityTextbox(product_selection_form[`quantity${i}`]); // show where the error is
                     }
                 }
             }
@@ -56,9 +60,6 @@
                 alert("Quantity not valid");
             } else if (total_qty == 0) {
                 alert("Quantity not selected");
-            } else {
-                window.location = `./invoice.html${document.location.search}`;
-                window.stop;
             }
         }
     }
@@ -86,7 +87,7 @@
                             <h2>${products[i].name}</h2>
                             <img src="${products[i].image}">
                             <h3>$${products[i].price}</h3>
-                            <h3><label id="quantity${i}_label"}">Quantity</label>
+                            <h3><label id="quantity${i}_label"}">Quantity:</label>
                             <input type="text" placeholder="0" name="quantity${i}" 
                             onkeyup="checkQuantityTextbox(this);"></h3>  
                             </section>

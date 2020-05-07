@@ -1,3 +1,5 @@
+//* Jasmine Maguire
+
 //* Array containing product info, code from Smartphone Products and Lab10.
 var products = [
     {
