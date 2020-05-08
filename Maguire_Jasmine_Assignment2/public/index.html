@@ -29,8 +29,9 @@
     function checkQuantityTextbox(theTextbox) {
         errs = isNonNegInt(theTextbox.value, true);
         if (errs.length == 0) {
-            errs = ['Quantity:'];
-        if (theTextbox.value.trim() == '') {} 
+            errs = ['You want:'];
+            }
+        if (theTextbox.value.trim() == '') {
             errs = ['Quantity:'];
         }
         document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", "); 
@@ -55,11 +56,14 @@
                     }
                 }
             }
-            // Respond to errors
+            // Respond to errors or redirect to invoice if ok
             if (has_errors) {
                 alert("Quantity not valid");
             } else if (total_qty == 0) {
                 alert("Quantity not selected");
+            } else {
+                window.location = `./login.html.html${document.location.search}`; //Redirects itself
+                window.stop;
             }
         }
     }
@@ -67,7 +71,7 @@
 </script>
 
 <body>
-    <form name="product_selection_form" action="/purchase" method="GET">
+    <form name="product_selection_form" action="process_purchase" method="POST">
         <header>
             <h1>Jasmine's Bonsai Shop</h1>
             <ul>
@@ -86,10 +90,10 @@
                         <section class="item">
                             <h2>${products[i].name}</h2>
                             <img src="${products[i].image}">
-                            <h3>$${products[i].price}</h3>
+                            <h3>$${products[i].price}</h2>
                             <h3><label id="quantity${i}_label"}">Quantity:</label>
                             <input type="text" placeholder="0" name="quantity${i}" 
-                            onkeyup="checkQuantityTextbox(this);"></h3>  
+                            onkeyup="checkQuantityTextbox(this);"></h3>
                             </section>
                         `);
                     }    

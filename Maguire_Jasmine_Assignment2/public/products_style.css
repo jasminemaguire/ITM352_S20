@@ -1,3 +1,4 @@
+/*Jasmine Maguire*/
 /*All styling modified from Assignment 1 Design Examples*/
 
 html {
@@ -13,7 +14,7 @@ body {
 
 /* Typography */
 
-h1, h2 {
+h1, h2, h3 {
     font-family: 'Gotu', cursive;
     margin: 0;
     text-align: center;
@@ -39,6 +40,8 @@ h2 {
 h3 {
     font-size: 1.5rem;
     color: black;
+    margin: 5%;
+    padding: 10px;
 }
 
 p {

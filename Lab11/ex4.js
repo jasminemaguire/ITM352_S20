@@ -1,5 +1,4 @@
 // Ex4a
-
 function isNonNegInt(q) {
     errors = []; // assume no errors at first
     if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
@@ -10,7 +9,6 @@ function isNonNegInt(q) {
 console.log(isNonNegInt());
 
 // Ex4b
-
 function isNonNegInt(q, returnErrors = false) {
 errors = []; // assume no errors at first
 if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value

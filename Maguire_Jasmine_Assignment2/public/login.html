@@ -1,5 +1,5 @@
-<!-- Jasmine Maguire--> 
-<!-- From Lab14--> 
+<!-- Jasmine Maguire-->
+<!-- From Lab14-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,23 +11,34 @@
     <title>Login</title>
     <link href="products_style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gotu" rel="stylesheet">
+
+    <script> 
+        let params = (new URL(document.location)).searchParams;
+        window.onload = function () {
+            if (params.has('LogError')) {
+                alert('Invalid Username or Passowrd');
+            }
+        }
+    </script>
 </head>
 
 <body>
-    <div class="login-box">
-        <form name="basic_login" method="POST" action="/login">
-            <div class="textbox">
-                <input type="text" id="username_input" name="username" size="40" placeholder="username"><br />
-            </div>
-            <div class="textbox">
-                <input type="password" name="password" size="40" placeholder="password"><br />
-            </div>
-            <div class=submit_button>
-                <input type="submit" value="Login" id="submit_login">
-            </div>
-            <p class="message">Not a user? <a href='./registration.html'>Register</a></p>
+    <h1>Login or sign up to continue to purchase</h1>
+        <form name="login" method="POST" action="/process_login">
+            <div class="login-box">
+            <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br>
+            <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br>
+            <input type="submit" value="Login" name="login"><br>
         </form>
     </div>
+
+    <script>
+        login.action += document.location.search;
+    </script>
+
+    <h2>New user?</h2>
+    <input type="button" name="newuser" value="New User"
+        onclick="window.location='./registration.html' + document.location.search;">
 </body>
 
 </html>
