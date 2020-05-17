@@ -65,7 +65,7 @@ function getCookie0(cname) {
     var ca = decodedCookie.split(';'); //Split the cookie on semi-colons into an array
     for (var i = 0; i < ca.length; i++) { //Loop the ca array
         var c = ca[i]; 
-        while (c.charAt(0) == ' ') {// while index at specified string == 0
+        while (c.charAt(0) == ' ') { //While index at specified string == 0
             c = c.substring(1); //c now is now given string 
         }
         if (c.indexOf(name) == 0) { //If the cookie is found

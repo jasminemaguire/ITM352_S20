@@ -22,29 +22,14 @@ let params = (new URL(document.location)).searchParams;
 	storedMoneyTreeGrove = JSON.parse(localStorage.getItem("MoneyTreeGrove"));
   storedSatsukiAzalea = JSON.parse(localStorage.getItem("SatsukiAzalea"));
   
-  if (params.has("displayDiscount")) { 
-		var existsThis = true; 
-		function showDiscountSent() { 
-			if (existsThis == true) { 
-				document.write('Discount applied'); 
-			}
-		}
 
-		//pushes the products stored in localStorage into storedUsersCartArray
-		storedUsersCartArray.push(storedChineseElmBonsaiCart);
-		storedUsersCartArray.push(storedFringeFlowerCart);
-		storedUsersCartArray.push(storedGreenMoundJuniperCart);
-		storedUsersCartArray.push(storedHawaiianUmbrellaCart);
-		storedUsersCartArray.push(storedMoneyTreeGroveCart);
-		storedUsersCartArray.push(storedSatsukiAzaleaCart);
-	} else { //else the continue to push products into the array
     storedUsersCartArray.push(storedChineseElmBonsaiCart);
 		storedUsersCartArray.push(storedFringeFlowerCart);
 		storedUsersCartArray.push(storedGreenMoundJuniperCart);
 		storedUsersCartArray.push(storedHawaiianUmbrellaCart);
 		storedUsersCartArray.push(storedMoneyTreeGroveCart);
 		storedUsersCartArray.push(storedSatsukiAzaleaCart);
-	}
+	
 	if (storedUsersCartArray != null) { //if values exist
 		var updatedCartArray = storedUsersCartArray.filter(function (el) { return el; }); //get rid of no value indexes and store into a new variable
 	}
@@ -110,15 +95,6 @@ let params = (new URL(document.location)).searchParams;
 		<address>
 			<p>Thank you,<div id="showFullName">0</div>for your purchase!<br>
 				<div class="emphasis">Jasmine's Bonsai Shop</div></em>
-			</p>
-			<p style="color: white">_______________</p>
-			<p id="discountWord"
-				style="font-weight: normal; font-style: italic; font-size: 15px; color:rgb(22, 169, 236);">
-				<script>
-					if (params.has("displayDiscount")){ //if document has displayDiscount
-						showDiscountSent(); 
-					}
-				</script>
 			</p>
 		</address>
 		<table class="meta">
