@@ -1,5 +1,6 @@
 <!-- Jasmine Maguire-->
 <!-- From Assignment 1 Example-->
+<!-- From https://www.w3schools.com/w3css/w3css_slideshow.asp-->
 
 
 <!DOCTYPE html>
@@ -11,6 +12,8 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="product_data.js"></script>
     <script src="userproducts.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 </head>
 
 <body>
@@ -31,12 +34,14 @@
         </div>
     </header>
 
+    <!--Slideshow from https://www.w3schools.com/w3css/w3css_slideshow.asp-->
+    <div class="w3-content w3-section style="max-width:500px">
     <center>
-    <img class="mySlides" src="/images/Home1.jpg">
-    <img class="mySlides" src="/images/Home2.jpg">
-    <img class="mySlides" src="/images/Home3.jpg">
+    <img class="mySlides w3-animate-fading" src="/images/Home1.jpg">
+    <img class="mySlides w3-animate-fading" src="/images/Home2.jpg">
+    <img class="mySlides w3-animate-fading" src="/images/Home3.jpg">
     </center>
-
+    </div>
     <script>
         var slideIndex = 0;
         carousel();
@@ -50,7 +55,7 @@
             slideIndex++;
             if (slideIndex > x.length) { slideIndex = 1 }
             x[slideIndex - 1].style.display = "block";
-            setTimeout(carousel, 2000); // Change image every 2 seconds
+            setTimeout(carousel, 8000); // Change image every 8 seconds, fade
         }
     </script>
 
