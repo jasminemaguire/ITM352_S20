@@ -124,10 +124,9 @@ function displayChineseElmBonsai() {
 //function to display the product on its own page 
     document.write(`
             <div class="products">
-            <img src=${products[0].image} style="width:50%">
+            <img class="shop-item-image" src=${products[0].image}>
             <hr class="space" />
             <div class="shop-item-description"><b>Type:</b> ${products[0].description}</div>
-            <hr class="space" />
             <div class="shop-item-details">
                  <span class="shop-item-price">$${products[0].price}</span>
             </div>
@@ -139,10 +138,9 @@ function displayFringeFlower() {
 //function to display the product on its own page 
 document.write(`
             <div class="products">
-            <img src=${products[1].image} style="width:50%">
+            <img class="shop-item-image" src=${products[1].image}>
             <hr class="space" />
             <div class="shop-item-description"><b>Type:</b> ${products[1].description}</div>
-            <hr class="space" />
             <div class="shop-item-details">
                  <span class="shop-item-price">$${products[1].price}</span>
             </div>
@@ -154,10 +152,9 @@ function displayGreenMoundJuniper() {
 //function to display the product on its own page 
 document.write(`
             <div class="products">
-            <img src=${products[2].image} style="width:50%">
+            <img class="shop-item-image" src=${products[2].image}>
             <hr class="space" />
             <div class="shop-item-description"><b>Type:</b> ${products[2].description}</div>
-            <hr class="space" />
             <div class="shop-item-details">
                  <span class="shop-item-price">$${products[2].price}</span>
             </div>
@@ -169,10 +166,9 @@ function displayHawaiianUmbrella() {
 //function to display the product on its own page 
 document.write(`
             <div class="products">
-            <img src=${products[3].image} style="width:50%">
+            <img class="shop-item-image" src=${products[3].image}>
             <hr class="space" />
             <div class="shop-item-description"><b>Type:</b> ${products[3].description}</div>
-            <hr class="space" />
             <div class="shop-item-details">
                  <span class="shop-item-price">$${products[3].price}</span>
             </div>
@@ -184,10 +180,9 @@ function displayMoneyTreeGrove() {
 //function to display the product on its own page 
 document.write(`
             <div class="products">
-            <img src=${products[4].image} style="width:50%">
+            <img class="shop-item-image" src=${products[4].image}>
             <hr class="space" />
             <div class="shop-item-description"><b>Type:</b> ${products[4].description}</div>
-            <hr class="space" />
             <div class="shop-item-details">
                  <span class="shop-item-price">$${products[4].price}</span>
             </div>
@@ -199,10 +194,9 @@ function displaySatsukiAzalea() {
 //function to display the product on its own page 
 document.write(`
             <div class="products">
-            <img src=${products[5].image} style="width:50%">
+            <img class="shop-item-image" src=${products[5].image}>
             <hr class="space" />
             <div class="shop-item-description"><b>Type:</b> ${products[5].description}</div>
-            <hr class="space" />
             <div class="shop-item-details">
                  <span class="shop-item-price">$${products[5].price}</span>
             </div>
