@@ -1,0 +1,40 @@
+<!--Jasmine Maguire-->
+<!--From Assignment 1 Example-->
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jasmines' Bonsai Shop</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="store.js" async></script>
+    <script src="product_data.js"></script>
+    <script src="addtocart.js" ></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+        <header class="main-header">
+                <nav class="main-nav nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="store.html">Shop Trees</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="shipping.html">Shipping Policy</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                    </ul>
+                </nav>
+                <h1 class="title-name title-name-large">Green Mound Juniper</h1>
+            </header>
+            <section class="container content-section">
+                        <div class="shop-items">
+                            <!--calls function from products_data.js to display products on page-->
+                            <script>displayGreenMoundJuniper();</script>
+                        </div>
+                        <button class="btn btn-primary btn-purchase" type="submit" name="add_cart" id="cartName" onclick="addGreenMoundJuniperToCart()">Add To Cart</button>
+            </section>
+</body>
+</html>

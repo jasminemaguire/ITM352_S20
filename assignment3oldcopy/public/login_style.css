@@ -1,0 +1,19 @@
+html {
+  
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin: center;
+}
+
+button {
+    background-color: rgb(253, 87, 170);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }

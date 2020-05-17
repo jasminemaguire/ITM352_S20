@@ -1,0 +1,48 @@
+<!-- sourced from https://www.w3schools.com/howto/howto_css_register_form.asp-->
+
+<html lang="en">
+
+<head>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        window.onload = function () { // creating the function for window.onload
+            if (params.has('errors')) {
+                console.log("invalid");
+                alert('Fix the following errors: \n' + params.get('errors'));
+            }
+        }    
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="products_style.css">
+    <link href="https://fonts.googleapis.com/css?family=Gotu" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Jasmine's Bonsai Shop</h1>
+    <p>Register here!</p>
+    <div>
+        <form method="POST" action="/register_user" name="register_form">
+            <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+"
+                placeholder="Enter First & Last Name"><br />
+            <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required
+                title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only"
+                placeholder="Enter Username"><br />
+            <input type="email" name="email" size="40" placeholder="Enter Email"
+                pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
+            <input type="password" id="password" name="password" size="40" pattern=".{8,}" required
+                title="8 Characters Minimum" placeholder="Enter Password"><br />
+            <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required
+                title="8 Characters Minimum" placeholder="Repeat Password"><br />
+
+            <button type="submit" class="registerbtn" id="submit">Register</button>
+        </form>
+        <script>
+        register_form.action += location.search; //location.search is qry str.
+        </script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+/*Jasmine Maguire*/
+/*Modified from Assignment 1 Design Examples*/
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+
+  border: 1px solid rgb(204, 204, 204, .1)
+}
+
+.boxItem {
+  background:rgba(255, 182, 193, 0.719);
+  min-width: 400px;
+  box-shadow: 0 20px 40px rgb(0, 0, 0, 0, .2);
+  border-radius: 5px;
+}
+
+.specifice {
+  width: 100%;
+  bottom: 0;
+  background: blue;
+  padding: 10px;
+  box-sizing: border-box;
+}

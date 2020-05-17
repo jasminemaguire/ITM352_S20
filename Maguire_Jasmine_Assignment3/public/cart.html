@@ -1,0 +1,194 @@
+<!-- Jasmine Maguire--> 
+<!-- From https://www.w3schools.com/js/js_cookies.asp-->
+<!-- From https://www.smashingmagazine.com/2019/08/shopping-cart-html5-web-storage/-->
+<!-- From https://stackoverflow.com/questions/5964373/is-there-a-difference-between-s-g-and-s-g-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="product_data.js"></script>
+    <script src="addtocart.js"></script>
+    <script src="store.js"></script>
+    <script src="userproducts.js"></script>
+
+</head>
+<script>
+    //Source: https://www.smashingmagazine.com/2019/08/shopping-cart-html5-web-storage/
+    //parse the localStorage with respective name and store in variable for each product
+    storedChineseElmBonsaiCart = JSON.parse(localStorage.getItem("ChineseElmBonsaiCart"));
+    storedFringeFlowerCart = JSON.parse(localStorage.getItem("FringeFlowerCart"));
+    storedGreenMoundJuniperCart = JSON.parse(localStorage.getItem("GreenMoundJuniperCart"));
+    storedHawaiianUmbrellaCart = JSON.parse(localStorage.getItem("HawaiianUmbrellaCart"));
+    storedMoneyTreeGroveCart = JSON.parse(localStorage.getItem("MoneyTreeGroveCart"));
+    storedSatsukiAzaleaCart = JSON.parse(localStorage.getItem("SatsukiAzaleaCart"));
+
+    storedUsersCartArray.push(storedChineseElmBonsaiCart);
+    storedUsersCartArray.push(storedFringeFlowerCart);
+    storedUsersCartArray.push(storedGreenMoundJuniperCart);
+    storedUsersCartArray.push(storedHawaiianUmbrellaCart);
+    storedUsersCartArray.push(storedMoneyTreeGroveCart);
+    storedUsersCartArray.push(storedSatsukiAzaleaCart);
+    
+    //if the storedUsersCartArray is not empty
+    if (storedUsersCartArray != null) {
+        var updatedCartArray = storedUsersCartArray.filter(function (el) { return el; }); //get rid of empty spaces in the array
+    }
+    //display products in cart
+    function displayUserProducts() {
+        for (i = 0; i < updatedCartArray.length; i++) { 
+            document.write(`
+            <div class="shop-item">
+            <span class="shop-item-title">${updatedCartArray[i].name}</span>
+            <div class="enlarge">
+                <img class="shop-item-image" src=${updatedCartArray[i].image}>
+            </div>
+            <hr class="space" />
+            <div class="shop-item-description">${updatedCartArray[i].description}</div>
+            <hr class="space" />
+            <div class="shop-item-details">
+                <hr class="space" />
+                <span class="shop-item-price">$${updatedCartArray[i].price.toFixed(2)}</span>
+                <label id="quantity${i}_label" class="shop-item-quantity">Quantity: </label>
+                <input class="cart-quantity-input" type="text" name="quantity${i}" onkeyup=checkQuantityTextbox(this); placeholder="0"> 
+            </div>
+            </div>
+        `);
+        }
+    }
+    //function to clear cart
+    function clearCart() {
+        localStorage.clear(); //clear localStorage function
+        alert("Your cart is empty"); 
+        window.location.reload(); 
+    }
+    let params = (new URL(document.location)).searchParams;
+    if (params.has("quantityError")) { //if there are errors
+        alert(params.get('quantityError')); //alert with error
+    }
+    
+    //Source: https://www.w3schools.com/js/js_cookies.as
+    //array for recently viewed
+    var recentViewArray = [];
+    //variable to get rid of empty spaces in array
+    var updatedRecentArray = [];
+    //function to set a cookie
+    function setCookie0(cname, cvalue, exdays) { //The name of the cookie (cname), the value of the cookie (cvalue), and the number of days until the cookie should expire (exdays)
+        var d = new Date(); 
+        d.setTime(d.getTime() + (exdays * 10000)); //Sets the expiration of cookie to 5 minutes after being set
+        var expires = "expires=" + d.toGMTString(); 
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/"; //The function sets a cookie by adding together the cookiename, the cookie value, and the expires string.
+    }
+
+    //Source: https://www.w3schools.com/js/js_cookies.asp
+    //function to get a cookie
+    function getCookie0(cname) { 
+        var name = cname + "="; //Create a variable (name) with the text to search for (cname + "=").
+        var decodedCookie = decodeURIComponent(document.cookie); //Decode the cookie string to handle cookies with special characters
+        var ca = decodedCookie.split(';'); //Split the cookie on semi-colons into an array
+        for (var i = 0; i < ca.length; i++) { //Loop the ca array
+            var c = ca[i]; 
+            while (c.charAt(0) == ' ') { //While index at specified string == 0
+                c = c.substring(1); //c now is now given string 
+            }
+            if (c.indexOf(name) == 0) { //If the cookie is found
+                return c.substring(name.length, c.length); //Return the cookie value
+            }
+        }
+        return ""; //If the cookies is not found, return ""
+    }
+    //function that checks for set cookies and gets them
+    function checkTheseCookies0() {
+        ChineseElmBonsaiCookie = getCookie0("ChineseElmBonsai");
+        FringeFlowerCookie = getCookie0("FringeFlower");
+        GreenMoundJuniperCookie = getCookie0("GreenMoundJuniper");
+        HawaiianUmbrellaCookie = getCookie0("HawaiianUmbrella");
+        MoneyTreeGroveCookie = getCookie0("MoneyTreeGrove");
+        SatsukiAzaleaCookie = getCookie0("SatsukiAzalea");
+        if (ChineseElmBonsaiCookie != "" && ChineseElmBonsaiCookie != null) { 
+            finalChineseElmBonsai = JSON.parse(ChineseElmBonsaiCookie); 
+            recentViewArray.push(finalChineseElmBonsai); //push the product into recentViewArray
+        }
+        if (FringeFlowerCookie != "" && FringeFlowerCookie != null) { 
+            finalFringeFlower = JSON.parse(FringeFlowerCookie); 
+            recentViewArray.push(finalFringeFlower); //push the product into recentViewArray
+        }
+        if (GreenMoundJuniperCookie != "" && GreenMoundJuniperCookie != null) { 
+            finalGreenMoundJuniper = JSON.parse(GreenMoundJuniperCookie); 
+            recentViewArray.push(finalGreenMoundJuniper); //push the product into recentViewArray
+        }
+        if (HawaiianUmbrellaCookie != "" && HawaiianUmbrellaCookie != null) { 
+            finalHawaiianUmbrella = JSON.parse(HawaiianUmbrellaCookie);
+            recentViewArray.push(finalHawaiianUmbrella); //push the product into recentViewArray
+        }
+        if (MoneyTreeGroveCookie != "" && MoneyTreeGroveCookie != null) { 
+            finalMoneyTreeGrove = JSON.parse(MoneyTreeGroveCookie); 
+            recentViewArray.push(finalMoneyTreeGrove); //push the product into recentViewArray
+        }
+        if (SatsukiAzaleaCookie != "" && SatsukiAzaleaCookie != null) { 
+            finalSatsukiAzalea = JSON.parse(SatsukiAzaleaCookie); 
+            recentViewArray.push(finalSatsukiAzalea); //push the product into recentViewArray
+        }
+        if (recentViewArray != null) { //if recentViewArray has values
+            updatedRecentArray = recentViewArray.filter(function (el) { return el; }); //recentViewArray now has recently viewed trees 
+        }
+        if (updatedRecentArray.length == 0) { //if no items in updatedRecentArray
+            document.write('No items have been viewed recently'); 
+        }
+        for (i = 0; i < updatedRecentArray.length; i++) { //display recently viewed items
+            document.write(`
+                        <div class="shop-item">
+                            <div class="enlarge">
+                                <a href="${(updatedRecentArray[i].name).replace(/\s+/g, '')}.html"><span class="shop-item-title">${updatedRecentArray[i].name}</span></a>
+                                <img class="shop-item-image" src=${updatedRecentArray[i].image}>
+                            </div>
+                            <div class="shop-item-details">
+                                <span class="shop-item-price">$${updatedRecentArray[i].price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `);
+        }
+    }
+</script>
+
+<body>
+    <header class="main-header">
+        <nav class="main-nav nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="store.html">Shop Trees</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="cart.html">Cart</a></li>
+            </ul>
+        </nav>
+        <h1 class="title-name title-name-large">CART</h1>
+    </header>
+    <section class="container content-section">
+        <form name="product_selection_form" action="/process_form" method="POST">
+            <h2 class="section-header">Your Cart:</h2>
+            <div class="shop-items">
+                <!--calls function from product_data.js to display products on page-->
+                <script>displayUserProducts();</script>
+            </div>
+            <input class="btn btn-primary btn-purchase" type="submit" name="purchase_submit" value="Purchase!">
+        </form>
+        <button class="btn btn-primary btn-purchase" onclick="clearCart()">Clear Cart</button>
+        <section class="container content-section">
+            <h2 class="section-header" id="store-section">Recently Viewed Items</h2>
+            <p style="text-align: center;">Recently Viewed List Will Clear After 5 min</p>
+            <div class="shop-items">
+                <script>checkTheseCookies0()</script>
+            </div>
+        </section>
+    </section>
+</body>
+
+</html>

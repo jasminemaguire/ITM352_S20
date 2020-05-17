@@ -1,0 +1,110 @@
+<!--Jasmine Maguire-->
+<!--From Lab 13-->
+<!--From https://paperform.co/blog/registration-form-in-html/ -->
+<!--From https://www.w3schools.com/howto/howto_css_register_form.asp-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="login.css" />
+    <title>Register</title>
+    <script>
+        let params = (new URL(document.location)).searchParams; 
+        window.onload = function () { //creating the function for window.onload
+            if (params.has("RegFullnameError")) { //full name error from query
+                regError = params.get("RegFullnameError");
+                nameLong = '<font color="red">Full name too long - 30 characters max</font>'; 
+                nameNoLetter = '<font color="red">Use letters only!</font>'; 
+                if (regError == nameLong) { 
+                    document.getElementById("regfullname").innerHTML = regError; //set inner html to display the error
+                }
+                if (regError == nameNoLetter) { 
+                    document.getElementById("regfullname").innerHTML = regError; //set inner html to display the error
+                }
+            }
+            if (params.has("RegPasswordError")) { //password error from query 
+                regError2 = params.get("RegPasswordError"); 
+                passNoMatch = '<font color="red">Passwords do not match</font>'; 
+                passLength = '<font color="red">Password too short - 6 characters minimum</font>'; 
+                if (regError2 == passLength) { 
+                    document.getElementById("regpassword").innerHTML = regError2; //set inner html to display the error
+                }
+                if (regError2 == passNoMatch) { 
+                    document.getElementById("regrepeatpassword").innerHTML = regError2; //set inner html to display the error
+                }
+            }
+            if (params.has("RegUsernameError")) { //username error from query
+                regError3 = params.get("RegUsernameError"); 
+                useNumLet = '<font color="red">Username must be characters and numbers only</font>'; 
+                useLong = '<font color="red">Username must be 10 characters or less</font>'; 
+                useShort = '<font color="red">Username must be at least 4 characters long</font>'; 
+                useTaken = '<font color="red">Username is already in use</font>'; 
+                if (regError3 == useNumLet) { 
+                    document.getElementById("regusername").innerHTML = regError3; //set inner html to display the error
+                }
+                if (regError3 == useLong) { 
+                    document.getElementById("regusername").innerHTML = regError3; //set inner html to display the error
+                }
+                if (regError3 == useShort) { 
+                    document.getElementById("regusername").innerHTML = regError3; //set inner html to display the error
+                }
+                if (regError3 == useTaken) {
+                    document.getElementById("regusername").innerHTML = regError3; //set inner html to display the error
+                }
+            }
+            if (params.has("RegEmailError")) { //email error from query
+                regError4 = params.get("RegEmailError"); 
+                emailInvalid = '<font color="red">Please enter a valid email address</font>'; 
+                if (regError4 == emailInvalid) { 
+                    document.getElementById("regemail").innerHTML = regError4; //set inner html to display the error
+                }
+            }
+            if (params.has("stickRegFullname")) { //if has stickRegFullname
+                showRegFullname = params.get("stickRegFullname"); 
+                document.getElementById("regfullnamebox").value = showRegFullname; 
+            }
+            if (params.has("stickUsername")) { //if has stickUsername
+                showUsername = params.get("stickUsername"); 
+                document.getElementById("regusernamebox").value = showUsername; 
+            }
+            if (params.has("stickEmail")) { //if has stickEmail
+                showEmail = params.get("stickEmail"); 
+                document.getElementById("regemailbox").value = showEmail; 
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <!--Register form-->
+    <!--Sourced from https://www.w3schools.com/howto/howto_css_register_form.asp-->
+    <form method="POST" id="register_form" name="registration_form" class="box">
+        <h1>Register here!</h1>
+        <input type="text" id="regfullnamebox" name="fullname" size="40" placeholder="enter full name"
+            style="font-size: 15px;" value="">
+        <label id="regfullname" class="" style="color: black;">Enter First & Last Name</label><br />
+        <input type="text" id="regusernamebox" name="username" size="40" placeholder="enter username"
+            style="font-size: 15px;" value="">
+        <label id="regusername" class="" style="color: black;">Username</label><br />
+        <input type="password" id="reguserbox" name="password" size="40" placeholder="enter password"
+            style="font-size: 15px;" value="">
+        <label id="regpassword" class="" style="color: black;">Password</label><br />
+        <input type="password" id="reguserbox" name="repeat_password" size="40" placeholder="enter password again"
+            style="font-size: 15px;" value="">
+        <label id="regrepeatpassword" class="" style="color: black;">Repeat Password</label><br />
+        <input type="email" id="regemailbox" name="email" size="40" placeholder="enter email" style="font-size: 15px;"
+            value="">
+        <label id="regemail" class="" style="color: black;">Email Address</label><br />
+        <input type="submit" value="register" id="submit">
+    </form>
+</body>
+<script>
+    register_form.action = "/register" + document.location.search; //location.search is qry string
+</script>
+
+</html>

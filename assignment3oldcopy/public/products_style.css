@@ -1,0 +1,209 @@
+/*Jasmine Maguire*/
+/*Modified from Assignment 1 Design Examples*/
+
+
+html {
+  font-family: 'Gotu', sans-serif;
+  background-color: seashell;
+  font-size: 10px;
+}
+
+body {
+  width: 800px;
+  margin: 0 auto;
+}
+
+/* Typography */
+
+h1, h2 {
+  font-family: 'Gotu', sans-serif;
+  margin: 0;
+  text-align: center;
+}
+
+h1 {
+  font-size: 5rem;
+  background-size: 40px 40px;
+  background-blend-mode: lighten;
+}
+
+h2 {
+  font-size: 2rem;
+  color: black;
+  text-align: center;
+  width: 500px;
+  position: absolute;
+  z-index: 3000;
+  line-height: 2rem;
+  padding-top: 0.3rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: black;
+}
+
+p {
+  font-size: 1.5rem;
+}
+
+/* block styling */
+
+header, aside, main, footer {
+  padding: 20px;
+}
+
+header {
+  border: 0;
+  border-bottom: 0;
+}
+
+aside {
+  border-right: 0;
+}
+
+body>div {
+  border: 0;
+  display: flex;
+}
+
+footer {
+  border: 0;
+  border-top: 0;
+  text-align: center;
+  ;
+}
+
+footer h1 {
+  font-style: italic;
+  font-size: 3rem;
+}
+
+aside {
+  flex: 3;
+}
+
+main {
+  flex: 7;
+  border: 0;
+}
+
+/*  Form styling */
+
+main {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+aside {
+  display: flex;
+  align-items: stretch;
+  padding: 50px 0;
+}
+
+aside div {
+  margin-bottom: 20px;
+}
+
+/* Styling the products */
+
+section {
+  width: 36%;
+  margin: 5px;
+  background-color: seashell;
+  position: relative;
+  height: 215px;
+}
+
+section p {
+  color: black;
+  background: seashell;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  position: absolute;
+  right: 10px;
+  bottom: -6px;
+  z-index: 2000;
+}
+
+.item {
+  background-size: 234px 24px;
+}
+
+.item img {
+  width: 200px;
+  height: 200px;
+  display: block;
+  position: absolute;
+  bottom: 0px;
+}
+
+input {
+  background: hotpink;
+  box-shadow: inset 1px 1px 1px white;
+  color: black;
+  border: none;
+  padding: 1px;
+  width: 201.5px;
+}
+
+section input {
+  color: rgb(59, 2, 59);
+  background: rgb(240, 238, 238);
+  width: 15px;
+  height: 15px;
+  line-height: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 1px hotpink;
+  position: absolute;
+  right: 10px;
+  bottom: 80px;
+  z-index: 2000;
+}
+
+section label {
+  width: 50px;
+  height: 50px;
+  color: rgb(94, 6, 50);
+  text-align: center;
+  position: absolute;
+  right: 10px;
+  bottom: 110px;
+  z-index: 2000;
+}
+
+table {
+  font-family: 'Gotu', cursive;
+  font-size: 3rem;
+}
+
+
+/* Navbar from: https://www.w3schools.com/css/css_navbar_horizontal.asp */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(241, 163, 163);
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}

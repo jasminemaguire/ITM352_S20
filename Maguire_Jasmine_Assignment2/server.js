@@ -11,7 +11,6 @@ var fs = require('fs'); // require file system from node
 var data = require("./public/products_data.js"); //include data from products_data.js
 var products = data.products;
 var filename = 'userdata.json' //defines array as object
-var purchase_data = {}; //variable that requests the query string of product quantity
 
 //From Lab 11
 if (fs.existsSync(filename)) { //Only open the file if it exists 
@@ -29,20 +28,20 @@ app.all('*', function (request, response, next) { //Sends type of request and th
     console.log(request.method + ' to ' + request.path);
     next();
 });
-app.use(myParser.urlencoded({ extended: true })); //get data in the body//
+app.use(myParser.urlencoded({ extended: true })); //get data in the body
 
 //From Assignment 1 Example
 //Send to invoice if no errors, otherwise send message
-app.post("/process_purchase", function (request, response) {
+app.post("/process_purchase", function (request, response) { 
     let POST = request.body; 
     console.log(POST);
     if (typeof POST['purchase_submit'] != 'undefined') {
-        var hasvalidquantities=true; // create a varibale assuming to be true// 
-        var hasquantities=false; // create a varibale assuming to be false// 
+        var hasvalidquantities=true; // create a varibale assuming to be true
+        var hasquantities=false; // create a varibale assuming to be false
         for (i = 0; i < products.length; i++) {
                 qty = POST[`quantity${i}`]; //set qty to the value in quantity_textbox
-                hasquantities = hasquantities || qty > 0; // Check for quantities //
-                hasvalidquantities = hasvalidquantities && isNonNegInt(qty);    // Check for valid quantities//     
+                hasquantities = hasquantities || qty > 0; // Check for quantities 
+                hasvalidquantities = hasvalidquantities && isNonNegInt(qty);    // Check for valid quantities
         } 
         // if all quantities are valid, send to invoice// 
         const stringified = queryString.stringify(POST);
@@ -159,4 +158,4 @@ function isNonNegInt(q, returnErrors = false) {
 //Lab 13
 //Look for files in the "public" folder and listen on port 8080
 app.use(express.static('./public')); //Creates a static server using express from the public folder
-app.listen(8080, () => console.log(`listen on port 8080`))
+app.listen(8080, () => console.log(`listening on port 8080`))

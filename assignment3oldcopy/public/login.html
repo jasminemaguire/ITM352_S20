@@ -1,0 +1,67 @@
+<!--sourced from https://www.w3schools.com/howto/howto_css_login_form.asp-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="products_style.css">
+    <link href="https://fonts.googleapis.com/css?family=Gotu" rel="stylesheet">
+    <script>
+        function login_user() {
+            data = new URLSearchParams(new FormData(login_form)); 
+            fetch('/check_login' + location.search, 
+                {
+                    method: 'post',
+                    body: data,
+                    redirect: 'follow'
+                }
+            ).then(function (response) { 
+                if (response.ok) { 
+                    response.json().then(function (errors) { 
+                        if (Object.keys(errors).length == 0) { 
+                            var username = login_form['username'].value;
+                            var name = login_form['name'].value; 
+                            window.location.href = './invoice.html' + location.search + '&username=' + username + '&name=' + name; 
+                        } else {
+                            for (errorId in errors) { 
+                                document.getElementById(errorId + '_message').innerHTML = errors[errorId]; 
+                            };
+                        };
+                    });
+                } else {
+                    console.log('Network request for /check_login failed with response ' + response.status + ': ' + response.statusText); 
+                }
+
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Jasmine's Bonsai Shop</h1>
+
+   <p>Log in or register to complete purchase</p>
+    <form action="javascript:login_user()" name="login_form" method="GET">
+        <div class="container">
+            <input type="text" name="username" size="40" placeholder="Enter Username">
+            <span id="username_message"></span><br />
+            <input type="password" name="password" size="40" placeholder="Enter Password">
+            <span id="password_message"></span><br />
+            <button type="submit" class="loginbtn" name="submit">Login</button>
+        </div>
+    </form>
+    <script>
+        login_form.action += './invoice.html'; 
+    </script> 
+    <button type="submit" style="color:rgb(90, 3, 51);"><a
+        onclick="window.location='./register.html'+window.location.search;"><i>New User?</i></a></h4>
+
+    </body>
+
+
+</html>

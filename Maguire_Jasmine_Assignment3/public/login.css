@@ -1,0 +1,108 @@
+/* Jasmine Maguire */
+/* From https://www.w3schools.com/howto/howto_css_register_form.asp */
+/* From https://www.w3schools.com/howto/howto_css_login_form.asp */
+
+@import url("https://fonts.googleapis.com/css?family=Gotu");
+
+/* General */
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 0.7; /* Firefox */
+  }
+
+/* Login Form CSS (Box) */
+.box {
+    width: 300px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: lightpink;
+    background-repeat:no-repeat;
+    background-size:cover;
+    text-align: center;
+    
+}
+
+/* Heading CSS for Login Form */
+.box h1 {
+    color: black;
+    text-transform: uppercase;
+    font-family: "Arial";
+    font-weight: 600;
+}
+
+/* CSS for Username & Password Input Fields  */
+.box input[type = "text"], .box input[type = "password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid rgb(253, 205, 229);
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.box input[type = "text"]:focus, .box input[type = "password"]:focus {
+    width: 280px;
+    border-color:rgb(224, 5, 115);
+}
+
+/* CSS for Submit Button */
+.box input[type = "submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid rgb(253, 205, 229);
+    padding: 14px 40px;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+/* On Hover. change color */
+.box input[type = "submit"]:hover {
+    background: rgba(221, 6, 139, 0.89);
+}
+
+/* CSS for Registration */
+.register {
+    text-align: center;
+}
+
+/* CSS for Registration Button */
+.button {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid rgb(253, 205, 229);
+    padding: 14px 40px;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+/* On Hover, change color */
+.button:hover {
+    background: rgba(221, 6, 139, 0.89);
+}

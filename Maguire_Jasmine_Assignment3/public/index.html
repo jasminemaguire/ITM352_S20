@@ -1,0 +1,57 @@
+<!-- Jasmine Maguire-->
+<!-- From Assignment 1 Example-->
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jasmine's Bonsai Shop</title>
+    <meta name="description" content="This is the description">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="product_data.js"></script>
+    <script src="userproducts.js"></script>
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="nav main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="store.html">Shop Trees</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="cart.html">Cart</a></li>
+
+            </ul>
+        </nav>
+        <h1 class="title-name title-name-large">Jasmine's Bonsai Shop</h1>
+        <div class="container">
+        </div>
+    </header>
+
+    <center>
+    <img class="mySlides" src="/images/Home1.jpg">
+    <img class="mySlides" src="/images/Home2.jpg">
+    <img class="mySlides" src="/images/Home3.jpg">
+    </center>
+
+    <script>
+        var slideIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > x.length) { slideIndex = 1 }
+            x[slideIndex - 1].style.display = "block";
+            setTimeout(carousel, 2000); // Change image every 2 seconds
+        }
+    </script>
+
+</html>
